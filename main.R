@@ -58,7 +58,7 @@ data = data.table(data)
 data <- data[order(data$user,data$date),] 
 setkey(data,user)
 
-data[,mean_user:=star-(mean(star)),by=user] #x-mean
+data[,mean_user:=star-((sum(star)-star)/(length(star)-1)),by=user] #x-mean correct new code
 data$mean_user = scale(as.numeric(data$mean_user), center = TRUE, scale = F)
 data$"0" <- sample(data$star) #create a random basline 
 data[,"1":=panel_lag(star,1),by=user]
